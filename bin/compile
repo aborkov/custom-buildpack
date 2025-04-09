@@ -10,4 +10,4 @@ if [[ ! -n "${BUILD_DIR}" ]]; then
   exit 1
 fi
 
-rm /path/to/file.txt
+rm "${BUILD_DIR}/target/luxapp-api-0.0.1-SNAPSHOT.jar.original"
