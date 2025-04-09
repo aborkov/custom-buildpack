@@ -11,6 +11,8 @@ if [[ ! -n "${BUILD_DIR}" ]]; then
 fi
 
 cd ${BUILD_DIR}
+pwd
+ls
 
 if [[ ! -f "${CLEAN_FILES}" ]]; then
   echo "Could not find .slug-post-clean file - exiting"
