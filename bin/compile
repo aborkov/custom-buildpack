@@ -3,13 +3,30 @@
 set -euo pipefail
 
 readonly BUILD_DIR=$1
-readonly CLEAN_FILES="${BUILD_DIR}/target/luxapp-api-0.0.1-SNAPSHOT.jar.original"
+readonly CLEAN_FILES=slug-post-clean
 
 if [[ ! -n "${BUILD_DIR}" ]]; then
   echo "No build directory specified - exiting"
   exit 1
 fi
 
-rm "${BUILD_DIR}/target/luxapp-api-0.0.1-SNAPSHOT.jar.original"
-rm -rf "${BUILD_DIR}/src"
-rm -rf "${BUILD_DIR}/target/dependency"
+cd ${BUILD_DIR}
+
+if [[ ! -f "${CLEAN_FILES}" ]]; then
+  echo "Could not find slug-post-clean file - exiting"
+  exit 1
+fi
+
+while read file; do
+  [[ ! -n "${file}" ]] && continue
+
+  if [[ -f "${file}" ]]; then
+    echo "Removing file ${file} from slug"
+    rm -f ${file}
+  elif [[ -d "${file}" ]]; then
+    echo "Removing directory ${file} from slug"
+    rm -rf ${file}
+  else
+    echo "Location ${file} not found - ignoring"
+  fi
+done <${CLEAN_FILES}
